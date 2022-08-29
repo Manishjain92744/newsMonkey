@@ -51,20 +51,12 @@ export default class News extends Component {
   this.updateNews();
 
    }
-   handlePreviousClick = async() => {
-  this.setState({page : this.state.page - 1});
-  this.updateNews();
-
-   }
-    handleNextClick = async() =>{
-   this.setState({page:this.state.page+1});
-    this.updateNews();
-  }
+   
 
   fetchMoreData = async () => {
-   this.setState({page : this.state.page+1})
-   const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+   const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
   //  this.setState({loading : true});
+   this.setState({page : this.state.page+1});
     let data =  await fetch(url);
     let parsedData= await data.json();
     console.log(parsedData);
@@ -72,7 +64,6 @@ export default class News extends Component {
       articles: this.state.articles.concat(parsedData.articles) , 
       totalResults : parsedData.totalResults ,
       //  loading : false,
-
       })
   };
 
